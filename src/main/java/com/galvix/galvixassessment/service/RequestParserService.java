@@ -22,13 +22,26 @@ public class RequestParserService {
 		this.objectMapper.registerModule(new JavaTimeModule());
 	}
 
-	public List<Order> readJsonlFile(MultipartFile file) throws IOException {
+	public List<Order> readJsonlFile(MultipartFile file, int page, int size) throws IOException {
 		List<Order> orders = new ArrayList<>();
+		int startLine = 2 * 10;
+		int limit = 10;
 		try (BufferedReader reader = new BufferedReader(new InputStreamReader(file.getInputStream()))) {
 			String line;
+			int currentLine = 0;
+			int linesRead = 0;
 			while ((line = reader.readLine()) != null) {
+				if (currentLine++ < startLine) {
+					continue;
+				}
+
 				Order order = objectMapper.readValue(line, Order.class);
 				orders.add(order);
+				linesRead++;
+
+				if (linesRead >= limit) {
+					break;
+				}
 			}
 		}
 		return orders;

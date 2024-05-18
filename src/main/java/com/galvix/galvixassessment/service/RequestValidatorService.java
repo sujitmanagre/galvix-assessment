@@ -6,19 +6,20 @@ import org.springframework.web.multipart.MultipartFile;
 @Service
 public class RequestValidatorService {
 
-  public boolean validateFile(MultipartFile file, String fileType) {
-    if (file.isEmpty()) {
-      return false;
-    }
+	public boolean validateFile(MultipartFile file, String fileType) {
 
-    if (!isJsonL(file.getOriginalFilename(), fileType)) {
-      return false;
-    }
+		if (file.isEmpty()) {
+			return false;
+		}
 
-    return true;
-  }
+		if (!isJsonL(file.getOriginalFilename(), fileType)) {
+			return false;
+		}
 
-  private boolean isJsonL(String filename, String fileType) {
-    return filename.toLowerCase().endsWith("."+fileType);
-  }
+		return true;
+	}
+
+	private boolean isJsonL(String filename, String fileType) {
+		return filename.toLowerCase().endsWith("." + fileType);
+	}
 }

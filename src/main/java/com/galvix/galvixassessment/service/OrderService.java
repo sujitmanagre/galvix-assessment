@@ -9,7 +9,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.galvix.galvixassessment.config.ResponseGeneratorFactory;
 import com.galvix.galvixassessment.config.ServiceConfig;
-import com.galvix.galvixassessment.dto.OrderResponse;
 import com.galvix.galvixassessment.dto.response.Order;
 import com.galvix.galvixassessment.enums.ResponseType;
 
@@ -23,10 +22,12 @@ public class OrderService {
 	@Autowired
 	private ResponseGeneratorFactory responseGeneratorFactory;
 
-	public List<OrderResponse> orderDetails(MultipartFile file, ResponseType responseType) throws IOException {
+	public Object orderDetails(MultipartFile file, ResponseType responseType, int page, int size) throws IOException {
 		try {
-			List<Order> orders = requestParserService.readJsonlFile(file);
+			List<Order> orders = requestParserService.readJsonlFile(file, page, size);
+
 			ResponseGenerator responseGenerator = responseGeneratorFactory.getResponseGenerator(responseType);
+
 			return responseGenerator.generateResponse(orders);
 		} catch (Exception e) {
 			throw e;

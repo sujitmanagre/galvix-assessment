@@ -20,9 +20,9 @@ public class ServiceConfig {
 	public Map<ResponseType, ResponseGenerator> responseGeneratorMap() {
 		Map<ResponseType, ResponseGenerator> responseGeneratorMap = new HashMap<>();
 		responseGeneratorMap.put(ResponseType.JSON, new JsonResponseGeneratorImpl());
-		responseGeneratorMap.put(ResponseType.CSV, new CsvResponseGeneratorImpl()); // Use correct implementation
-		responseGeneratorMap.put(ResponseType.XML, new XmlResponseGeneratorImpl()); // Use correct implementation
-		responseGeneratorMap.put(ResponseType.YAML, new YamlResponseGeneratorImpl()); // Use correct implementation
+		responseGeneratorMap.put(ResponseType.CSV, new CsvResponseGeneratorImpl());
+		responseGeneratorMap.put(ResponseType.XML, new XmlResponseGeneratorImpl());
+		responseGeneratorMap.put(ResponseType.YAML, new YamlResponseGeneratorImpl());
 		return responseGeneratorMap;
 	}
 
