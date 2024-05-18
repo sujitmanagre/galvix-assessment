@@ -15,13 +15,13 @@ public interface ResponseGenerator {
 	Object generateResponse(List<Order> orders) throws IOException;
 
 	static List<OrderSummary> generateJsonResponse(List<Order> orders) {
-		List<OrderSummary> orderRespons = new ArrayList<>();
+		List<OrderSummary> orderResponse = new ArrayList<>();
 		for (Order order : orders) {
 			OrderSummary orderSummary = orderToOrderResponse(order);
-			orderRespons.add(orderSummary);
+			orderResponse.add(orderSummary);
 		}
 
-		return orderRespons;
+		return orderResponse;
 	}
 
 	private static OrderSummary orderToOrderResponse(Order order) {

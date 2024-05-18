@@ -15,6 +15,12 @@ public class RequestValidatorService {
 			throw new CustomException(HttpStatus.BAD_REQUEST, "file must not be null or empty");
 		}
 
+		// since currently supporting only jsonl file as an input
+		// this validation can be removed later when we support multiple formats
+		if (!isJsonL(file.getOriginalFilename(), "jsonl")) {
+			throw new CustomException(HttpStatus.BAD_REQUEST, "file format must be jsonl");
+		}
+
 		if (!isJsonL(file.getOriginalFilename(), fileType)) {
 			throw new CustomException(HttpStatus.BAD_REQUEST, "file type and file format does not match");
 		}
