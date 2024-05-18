@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.galvix.galvixassessment.enums.ResponseType;
+import com.galvix.galvixassessment.exception.CustomException;
 import com.galvix.galvixassessment.service.OrderService;
 import com.galvix.galvixassessment.service.RequestValidatorService;
 
@@ -24,15 +25,18 @@ public class OrderController {
 
 	@PostMapping("/summary")
 	public ResponseEntity<?> orderDetails(@RequestParam("file") MultipartFile file,
-			@RequestParam("fileType") String fileType, @RequestParam("responseType") ResponseType responseType,
+			@RequestParam("fileType") String fileType,
+			@RequestParam(value = "responseType", defaultValue = "JSON") ResponseType responseType,
 			@RequestParam(value = "page", defaultValue = "0") int page,
 			@RequestParam(value = "size", defaultValue = "10") int size) {
 		try {
-			boolean validate = requestValidatorService.validateFile(file, fileType);
-			if (!validate)
-				return new ResponseEntity<>("Invalid file type or empty file", HttpStatus.BAD_REQUEST);
-			Object response = orderService.orderDetails(file, responseType, page, size);
+			requestValidatorService.requestValidator(file, fileType);
+
+			Object response = orderService.getOrderSummary(file, responseType, page, size);
+
 			return new ResponseEntity<>(response, HttpStatus.OK);
+		} catch (CustomException e) {
+			return new ResponseEntity<>(e.getMessage(), e.getStatus());
 		} catch (Exception e) {
 			return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}

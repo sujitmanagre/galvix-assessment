@@ -1,4 +1,4 @@
-package com.galvix.galvixassessment.dto.response;
+package com.galvix.galvixassessment.dto;
 
 import java.util.StringJoiner;
 

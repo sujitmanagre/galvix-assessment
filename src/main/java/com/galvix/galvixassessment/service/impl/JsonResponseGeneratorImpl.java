@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.galvix.galvixassessment.dto.response.Order;
+import com.galvix.galvixassessment.dto.Order;
 import com.galvix.galvixassessment.service.ResponseGenerator;
 
 @Service

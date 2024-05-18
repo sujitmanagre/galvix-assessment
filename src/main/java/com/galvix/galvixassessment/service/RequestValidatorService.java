@@ -1,22 +1,24 @@
 package com.galvix.galvixassessment.service;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.galvix.galvixassessment.exception.CustomException;
 
 @Service
 public class RequestValidatorService {
 
-	public boolean validateFile(MultipartFile file, String fileType) {
+	public void requestValidator(MultipartFile file, String fileType) {
 
-		if (file.isEmpty()) {
-			return false;
+		if (file == null || file.isEmpty()) {
+			throw new CustomException(HttpStatus.BAD_REQUEST, "file must not be null or empty");
 		}
 
 		if (!isJsonL(file.getOriginalFilename(), fileType)) {
-			return false;
+			throw new CustomException(HttpStatus.BAD_REQUEST, "file type and file format does not match");
 		}
 
-		return true;
 	}
 
 	private boolean isJsonL(String filename, String fileType) {

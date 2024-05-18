@@ -5,37 +5,37 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.galvix.galvixassessment.dto.OrderResponse;
-import com.galvix.galvixassessment.dto.response.Customer;
-import com.galvix.galvixassessment.dto.response.Item;
-import com.galvix.galvixassessment.dto.response.Order;
+import com.galvix.galvixassessment.dto.Customer;
+import com.galvix.galvixassessment.dto.Item;
+import com.galvix.galvixassessment.dto.Order;
+import com.galvix.galvixassessment.dto.OrderSummary;
 
 public interface ResponseGenerator {
 
 	Object generateResponse(List<Order> orders) throws IOException;
 
-	static List<OrderResponse> generateJsonResponse(List<Order> orders) {
-		List<OrderResponse> orderResponses = new ArrayList<>();
+	static List<OrderSummary> generateJsonResponse(List<Order> orders) {
+		List<OrderSummary> orderRespons = new ArrayList<>();
 		for (Order order : orders) {
-			OrderResponse orderResponse = orderToOrderResponse(order);
-			orderResponses.add(orderResponse);
+			OrderSummary orderSummary = orderToOrderResponse(order);
+			orderRespons.add(orderSummary);
 		}
 
-		return orderResponses;
+		return orderRespons;
 	}
 
-	private static OrderResponse orderToOrderResponse(Order order) {
-		OrderResponse orderResponse = new OrderResponse();
+	private static OrderSummary orderToOrderResponse(Order order) {
+		OrderSummary orderSummary = new OrderSummary();
 		if (order == null)
-			return orderResponse;
+			return orderSummary;
 
-		orderResponse.setOrderId(order.getOrderId());
-		orderResponse.setOrderDate(order.getOrderDatetime().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
-		orderResponse.setTotalOrderValue(calculateTotalOrderValue(order.getItems()));
-		orderResponse.setAverageUnitPrice(calculateAverageUnitPrice(order.getItems()));
-		orderResponse.setUnitCount(calculateUnitCount(order.getItems()));
-		orderResponse.setCustomerState(getState(order.getCustomer()));
-		return orderResponse;
+		orderSummary.setOrderId(order.getOrderId());
+		orderSummary.setOrderDate(order.getOrderDatetime().format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+		orderSummary.setTotalOrderValue(calculateTotalOrderValue(order.getItems()));
+		orderSummary.setAverageUnitPrice(calculateAverageUnitPrice(order.getItems()));
+		orderSummary.setUnitCount(calculateUnitCount(order.getItems()));
+		orderSummary.setCustomerState(getState(order.getCustomer()));
+		return orderSummary;
 
 	}
 

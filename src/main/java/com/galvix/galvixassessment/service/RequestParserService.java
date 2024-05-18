@@ -11,7 +11,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
-import com.galvix.galvixassessment.dto.response.Order;
+import com.galvix.galvixassessment.dto.Order;
 
 @Service
 public class RequestParserService {
@@ -24,8 +24,8 @@ public class RequestParserService {
 
 	public List<Order> readJsonlFile(MultipartFile file, int page, int size) throws IOException {
 		List<Order> orders = new ArrayList<>();
-		int startLine = 2 * 10;
-		int limit = 10;
+		int startLine = page * size;
+		int limit = size;
 		try (BufferedReader reader = new BufferedReader(new InputStreamReader(file.getInputStream()))) {
 			String line;
 			int currentLine = 0;

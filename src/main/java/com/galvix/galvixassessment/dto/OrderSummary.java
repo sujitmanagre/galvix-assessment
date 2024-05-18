@@ -2,7 +2,7 @@ package com.galvix.galvixassessment.dto;
 
 import java.util.StringJoiner;
 
-public class OrderResponse {
+public class OrderSummary {
 	private String orderId;
 	private String orderDate;
 	private Double totalOrderValue;
@@ -10,7 +10,7 @@ public class OrderResponse {
 	private Integer unitCount;
 	private String customerState;
 
-	public OrderResponse() {
+	public OrderSummary() {
 	}
 
 	public String getOrderId() {
@@ -63,7 +63,7 @@ public class OrderResponse {
 
 	@Override
 	public String toString() {
-		return new StringJoiner(", ", OrderResponse.class.getSimpleName() + "[", "]").add("orderId='" + orderId + "'")
+		return new StringJoiner(", ", OrderSummary.class.getSimpleName() + "[", "]").add("orderId='" + orderId + "'")
 				.add("orderDate='" + orderDate + "'").add("totalOrderValue=" + totalOrderValue)
 				.add("averageUnitPrice=" + averageUnitPrice).add("unitCount=" + unitCount)
 				.add("customerState='" + customerState + "'").toString();
